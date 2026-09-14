@@ -1,5 +1,5 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-
+ Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local
 local Window = Rayfield:CreateWindow({
    Name = "Heavenly Hub",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -47,34 +47,4 @@ Rayfield:Notify({
    Content = "very good gui",
    Duration = 5,
    Image = 4483362458,
-})
-
-local Button = Tab:CreateButton({
-   Name = "Button Example",
-   Callback = function()
-   -- LocalScript inside StarterPlayerScripts
-local UserInputService = game:GetService("UserInputService")
-local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-
--- Track state to toggle on or off if needed
-local infiniteJumpEnabled = true 
-
-UserInputService.JumpRequest:Connect(function()
-    if infiniteJumpEnabled then
-        -- Change the character's humanoid state to allow another jump instantly
-        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    end
-end)
-
--- Ensure the script continues to work if the character resets or respawns
-player.CharacterAdded:Connect(function(newCharacter)
-    character = newCharacter
-    humanoid = newCharacter:WaitForChild("Humanoid")
-end)
-
-   end,
 })

@@ -38,3 +38,5 @@ local Window = Rayfield:CreateWindow({
       Key = {"Hello"} -- List of keys that the system will accept, can be RAW file links (pastebin, github, etc.) or simple strings ("hello", "key22")
    }
 })
+
+local MainTab = Window:CreateTab("Tab Example",nil) -- Title, Image

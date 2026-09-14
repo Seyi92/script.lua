@@ -48,3 +48,10 @@ Rayfield:Notify({
    Duration = 5,
    Image = 4483362458,
 })
+
+local Button = Tab:CreateButton({
+   Name = "Button Example",
+   Callback = function()
+   
+   end,
+})

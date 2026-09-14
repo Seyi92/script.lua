@@ -1,84 +1,40 @@
--- 0. Safety Check: Wait until the game loads fully
-if not game:IsLoaded() then game.Loaded:Wait() end
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
--- 1. DELTA COMPATIBLE LOADSTRING (Direct Raw GitHub Link)
-local Rayfield = loadstring(game:HttpGet('https://githubusercontent.com'))()
-
--- 2. Create the Main Menu Window
 local Window = Rayfield:CreateWindow({
-   Name = "Oceanic Script Hub (Delta Fixed)",
-   LoadingTitle = "Initializing UI...",
-   LoadingSubtitle = "Delta Executor Version",
-   ConfigurationSaving = { Enabled = false },
-   KeySystem = false
-})
+   Name = "Heavenly Hub",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "Blox Fruits",
+   LoadingSubtitle = "by Heavenly Hub",
+   ShowText = "Rayfield", -- for mobile users to unhide Rayfield, change if you'd like
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
--- 3. Create the 3 Tabs at the Top
-local PvpTab = Window:CreateTab("⚔️ PvP", nil)
-local FarmTab = Window:CreateTab("🚜 Farming", nil)
-local SeaTab = Window:CreateTab("🌊 Sea Events", nil)
+   ToggleUIKeybind = "K", -- The keybind to toggle the UI visibility (string like "K" or Enum.KeyCode)
 
--- ==========================================================
--- ⚔️ PvP TAB SCRIPTS
--- ==========================================================
-PvpTab:CreateSection("Target Lock & Hitboxes")
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from emitting warnings when the script has a version mismatch with the interface.
 
-local Camera = game:GetService("Workspace").CurrentCamera
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-_G.AimbotEnabled = false
-_G.HitboxSize = 2
+   -- ScriptID = "sid_xxxxxxxxxxxx", -- Your Script ID from developer.sirius.menu — enables analytics, managed keys, and script hosting
 
-PvpTab:CreateToggle({
-   Name = "Camera Aimbot (Closest Player)",
-   CurrentValue = false,
-   Callback = function(Value)
-       _G.AimbotEnabled = Value
-       
-       task.spawn(function()
-           while _G.AimbotEnabled do
-               local closestPlayer = nil
-               local shortestDistance = math.huge
-               
-               for _, player in ipairs(Players:GetPlayers()) do
-                   if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
-                       local distance = (LocalPlayer.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
-                       if distance < shortestDistance then
-                           shortestDistance = distance
-                           closestPlayer = player
-                       end
-                   end
-               end
-               
-               if closestPlayer and closestPlayer.Character:FindFirstChild("Head") then
-                   Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
-               end
-               
-               task.wait(0.03) -- Delta Mobile adjustment: Slightly slower loop to prevent crashing mobile CPUs
-           end
-       end)
-   end,
-})
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Big Hub"
+   },
 
-PvpTab:CreateSlider({
-   Name = "Hitbox Expander (Head Size)",
-   Range = {2, 30},
-   Increment = 1,
-   CurrentValue = 2,
-   Callback = function(Value)
-       _G.HitboxSize = Value
-       
-       for _, player in ipairs(Players:GetPlayers()) do
-           if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") then
-               player.Character.Head.Size = Vector3.new(_G.HitboxSize, _G.HitboxSize, _G.HitboxSize)
-               player.Character.Head.CanCollide = true
-               
-               if _G.HitboxSize > 2 then
-                   player.Character.Head.Transparency = 0.5
-               else
-                   player.Character.Head.Transparency = 0
-               end
-           end
-       end
-   end,
+   Discord = {
+      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "noinvitelink", -- The Discord invite code, do not include Discord.gg/. E.g. Discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the Discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided", -- Use this to tell the user how to get a key
+      FileName = "Key", -- It is recommended to use something unique, as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"Hello"} -- List of keys that the system will accept, can be RAW file links (pastebin, github, etc.) or simple strings ("hello", "key22")
+   }
 })

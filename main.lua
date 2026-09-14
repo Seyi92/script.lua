@@ -41,3 +41,10 @@ local Window = Rayfield:CreateWindow({
 
 local MainTab = Window:CreateTab("Home",nil) -- Title, Image
 local Section = Tab:CreateSection("Main")
+
+Rayfield:Notify({
+   Title = "You execute the script",
+   Content = "very good gui",
+   Duration = 5,
+   Image = 4483362458,
+})
